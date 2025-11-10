@@ -1,4 +1,4 @@
-package com.example.task_planner
+package com.surya.taskPlanner
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:582917071683:android:c62a9cc4cc81861cf945f6",
+        "mobilesdk_app_id": "1:582917071683:android:da1730cfae936e09f945f6",
         "android_client_info": {
-          "package_name": "com.example.task_planner"
+          "package_name": "com.surya.taskPlanner"
         }
       },
       "oauth_client": [],
