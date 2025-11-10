@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "582917071683",
+    "project_id": "suryas-workspace",
+    "storage_bucket": "suryas-workspace.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:582917071683:android:c62a9cc4cc81861cf945f6",
+        "android_client_info": {
+          "package_name": "com.example.task_planner"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwzj353mks7of7PaKVz1NVx0qTcEGjvjw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
