@@ -1,31 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:task_planner/shared/providers/user_auth_provider.dart';
 import 'package:task_planner/theme/app_theme.dart';
 import 'package:task_planner/theme/colors.dart';
 import 'package:task_planner/global.dart';
 import 'package:task_planner/view/custom_widgets/auth_text_field.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends StatelessWidget {
+  static TextEditingController loginController = TextEditingController();
+  static TextEditingController passwordController = TextEditingController();
+  static GlobalKey<FormState> formkey = GlobalKey();
+
   const LoginPage({super.key});
-
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  final TextEditingController loginController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final GlobalKey<FormState> key = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, child) {
+        final authState = ref.watch(authProvider);
+        ref.listen(authProvider, (prev, next) {
+          if (next is AuthErrorState) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(next.errorMsg)));
+          } else if (next is AuthSuccessState) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('SuccessFully Logged in')));
+          }
+        });
         return Scaffold(
           body: Container(
             margin: EdgeInsets.symmetric(horizontal: 30),
             child: Form(
-              key: key,
+              key: formkey,
               child: Column(
                 spacing: style.insets.lg,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -66,12 +74,25 @@ class _LoginPageState extends State<LoginPage> {
                         backgroundColor: AppColors.primary,
                         foregroundColor: AppColors.white,
                       ),
-                      onPressed: () {
-                        if (key.currentState?.validate() == true) {
-                          Navigator.pushNamed(context, 'home');
-                        }
-                      },
-                      child: Text('Submit'),
+                      onPressed: (authState is AuthLoadingState)
+                          ? null
+                          : () {
+                              if (formkey.currentState?.validate() == true) {
+                                ref
+                                    .read(authProvider.notifier)
+                                    .login(
+                                      loginController.text,
+                                      passwordController.text,
+                                    );
+                              }
+                            },
+                      child: (authState is AuthLoadingState)
+                          ? SizedBox(
+                              height: 30,
+                              width: 30,
+                              child: CircularProgressIndicator(),
+                            )
+                          : Text('Submit'),
                     ),
                   ),
                   Row(
@@ -112,7 +133,7 @@ class _LoginPageState extends State<LoginPage> {
                           foregroundColor: AppColors.white,
                         ),
                         onPressed: () {
-                          ref.watch(appthemeProvider.notifier).toggleTheme();
+                          ref.read(appthemeProvider.notifier).toggleTheme();
                         },
                         icon: Icon(Icons.dark_mode),
                       ),

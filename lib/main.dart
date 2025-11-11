@@ -1,11 +1,15 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:task_planner/firebase_options.dart';
 import 'package:task_planner/theme/app_theme.dart';
 import 'package:task_planner/theme/style.dart';
 import 'package:task_planner/view/screens/home_screen.dart';
 import 'package:task_planner/view/screens/login_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(ProviderScope(child: const MainApp()));
 }
 
