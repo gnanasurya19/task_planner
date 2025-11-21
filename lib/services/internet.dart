@@ -5,7 +5,7 @@ class InternetService {
   Future<bool> checkNetwork() async {
     List<ConnectivityResult> result = await Connectivity().checkConnectivity();
     if (result.any((element) => element == ConnectivityResult.none)) {
-      throw false;
+      return false;
     } else {
       return true;
     }

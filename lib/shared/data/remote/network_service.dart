@@ -1,9 +1,11 @@
-import 'package:http/http.dart' as http;
+abstract class Network {
+  String get baseUrl;
 
-class NetworkService {
-  String get baseUrl => "";
+  Map<String, dynamic> get header;
 
-  Future getFromAPI() async {
-    return await http.get(Uri.parse("https://fakestoreapi.com/products"));
-  }
+  void updateHeader(Map<String, dynamic> data);
+
+  Future getFromAPI(String endURL, {Map<String, dynamic>? queryParams});
+
+  Future postToAPI(String endURL, dynamic data);
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:task_planner/shared/providers/user_auth_provider/user_auth_provider.dart';
-import 'package:task_planner/shared/providers/user_auth_provider/user_auth_state.dart';
+import 'package:task_planner/features/auth/providers/user_auth_provider/user_auth_provider.dart';
+import 'package:task_planner/features/auth/providers/user_auth_provider/user_auth_state.dart';
 import 'package:task_planner/theme/app_theme.dart';
 import 'package:task_planner/theme/colors.dart';
 import 'package:task_planner/global.dart';
@@ -29,6 +29,10 @@ class LoginPage extends StatelessWidget {
               context,
             ).showSnackBar(SnackBar(content: Text('SuccessFully Logged in')));
             Navigator.pushNamed(context, 'home');
+          } else if (next is AuthNoInternet) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('No Internet')));
           }
         });
         return Scaffold(
@@ -37,109 +41,116 @@ class LoginPage extends StatelessWidget {
             child: Form(
               key: formkey,
               child: Column(
-                spacing: style.insets.lg,
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('SIGN IN', style: style.text.boldLarge),
-                  AuthField(
-                    hintText: 'Email',
-                    controller: loginController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Please enter email";
-                      } else if (!emailRegex.hasMatch(value)) {
-                        return "Please enter valid email";
-                      } else {
-                        return null;
-                      }
-                    },
-                  ),
-                  AuthField(
-                    hintText: 'Password',
-                    controller: passwordController,
-                    obscureText: true,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Please enter password";
-                      } else if (value.length < 4) {
-                        return "Plese enter aleast 4 character";
-                      } else {
-                        return null;
-                      }
-                    },
-                  ),
-                  // SizedBox(height: 10),
-                  FractionallySizedBox(
-                    widthFactor: 1,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primary,
-                        foregroundColor: AppColors.white,
-                      ),
-                      onPressed: (authState is AuthLoadingState)
-                          ? null
-                          : () {
-                              if (formkey.currentState?.validate() == true) {
+                  Expanded(
+                    child: Column(
+                      spacing: style.insets.lg,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('SIGN IN', style: style.text.boldLarge),
+                        AuthField(
+                          hintText: 'Email',
+                          controller: loginController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Please enter email";
+                            } else if (!emailRegex.hasMatch(value)) {
+                              return "Please enter valid email";
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                        AuthField(
+                          hintText: 'Password',
+                          controller: passwordController,
+                          obscureText: true,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Please enter password";
+                            } else if (value.length < 4) {
+                              return "Plese enter aleast 4 character";
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                        // SizedBox(height: 10),
+                        FractionallySizedBox(
+                          widthFactor: 1,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.primary,
+                              foregroundColor: AppColors.white,
+                            ),
+                            onPressed: (authState is AuthLoadingState)
+                                ? null
+                                : () {
+                                    if (formkey.currentState?.validate() ==
+                                        true) {
+                                      ref
+                                          .read(authProvider.notifier)
+                                          .login(
+                                            loginController.text,
+                                            passwordController.text,
+                                          );
+                                    }
+                                  },
+                            child: (authState is AuthLoadingState)
+                                ? SizedBox(
+                                    height: 30,
+                                    width: 30,
+                                    child: CircularProgressIndicator(),
+                                  )
+                                : Text('Submit'),
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(
+                              style: IconButton.styleFrom(
+                                shadowColor: AppColors.black,
+                                elevation: 4,
+                                backgroundColor: Theme.of(
+                                  context,
+                                ).colorScheme.tertiary,
+                                foregroundColor: AppColors.white,
+                              ),
+                              onPressed: () {
                                 ref
-                                    .read(authProvider.notifier)
-                                    .login(
-                                      loginController.text,
-                                      passwordController.text,
-                                    );
-                              }
-                            },
-                      child: (authState is AuthLoadingState)
-                          ? SizedBox(
-                              height: 30,
-                              width: 30,
-                              child: CircularProgressIndicator(),
-                            )
-                          : Text('Submit'),
+                                    .read(appthemeProvider.notifier)
+                                    .toggleTheme();
+                              },
+                              icon: Icon(Icons.dark_mode),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconButton(
-                        style: IconButton.styleFrom(
-                          shadowColor: AppColors.black,
-                          elevation: 4,
-                          backgroundColor: Theme.of(
-                            context,
-                          ).colorScheme.tertiary,
-                          foregroundColor: AppColors.white,
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: 12),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Don\'t have account ? ',
+                          style: style.text.regular,
                         ),
-                        onPressed: () {},
-                        icon: Icon(Icons.g_mobiledata_sharp),
-                      ),
-                      SizedBox(width: style.insets.lg),
-                      IconButton(
-                        style: IconButton.styleFrom(
-                          shadowColor: AppColors.black,
-                          elevation: 4,
-                          backgroundColor: Theme.of(
-                            context,
-                          ).colorScheme.tertiary,
-                          foregroundColor: AppColors.white,
+                        InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(context, 'register');
+                          },
+                          child: Text(
+                            ' Clich here',
+                            style: style.text.regular.copyWith(
+                              color: AppColors.blue,
+                            ),
+                          ),
                         ),
-                        onPressed: () {},
-                        icon: Icon(Icons.apple),
-                      ),
-                      IconButton(
-                        style: IconButton.styleFrom(
-                          shadowColor: AppColors.black,
-                          elevation: 4,
-                          backgroundColor: Theme.of(
-                            context,
-                          ).colorScheme.tertiary,
-                          foregroundColor: AppColors.white,
-                        ),
-                        onPressed: () {
-                          ref.read(appthemeProvider.notifier).toggleTheme();
-                        },
-                        icon: Icon(Icons.dark_mode),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),

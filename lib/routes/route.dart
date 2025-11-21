@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_planner/features/auth/presentation/screens/register_page.dart';
 import 'package:task_planner/features/home/presentation/home_screen.dart';
 import 'package:task_planner/features/auth/presentation/screens/login_screen.dart';
 import 'package:task_planner/features/splash/presentation/splash_screen.dart';
@@ -11,6 +12,7 @@ class AppRoutes {
       "splash": (context) => SplashScreen(),
       "login": (context) => const LoginPage(),
       'home': (context) => HomePage(),
+      "register": (context) => RegisterPage(),
     };
   }
 }

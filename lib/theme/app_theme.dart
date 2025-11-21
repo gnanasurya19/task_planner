@@ -33,10 +33,14 @@ class AppThemeNotifier extends StateNotifier<ThemeMode> {
 
 class AppTheme {
   static ThemeData get theme => ThemeData.light().copyWith(
+    pageTransitionsTheme: PageTransitionsTheme(
+      builders: {TargetPlatform.android: ZoomPageTransitionsBuilder()},
+    ),
     appBarTheme: AppBarTheme(
       backgroundColor: AppColors.primary,
       foregroundColor: AppColors.white,
     ),
+    scaffoldBackgroundColor: AppColors.white,
     colorScheme: ColorScheme.light(
       primary: Color(0xff2b4e62),
       secondary: Color(0xff437c93),
@@ -45,6 +49,9 @@ class AppTheme {
   );
 
   static ThemeData get dark => ThemeData.dark().copyWith(
+    pageTransitionsTheme: PageTransitionsTheme(
+      builders: {TargetPlatform.android: ZoomPageTransitionsBuilder()},
+    ),
     appBarTheme: AppBarTheme(
       backgroundColor: AppColors.primary,
       foregroundColor: AppColors.white,
