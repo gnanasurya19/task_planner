@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:task_planner/shared/providers/user_auth_provider.dart';
+import 'package:task_planner/shared/providers/user_auth_provider/user_auth_state.dart';
 import 'package:task_planner/theme/app_theme.dart';
 import 'package:task_planner/theme/colors.dart';
 import 'package:task_planner/global.dart';
-import 'package:task_planner/view/custom_widgets/auth_text_field.dart';
+import 'package:task_planner/features/auth/presentation/widgets/auth_text_field.dart';
 
 class LoginPage extends StatelessWidget {
   static TextEditingController loginController = TextEditingController();

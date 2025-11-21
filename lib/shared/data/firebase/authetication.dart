@@ -11,6 +11,10 @@ class FireAuth {
     return _firebaseAuth.currentUser;
   }
 
+  Future<void> refreshUser() async {
+    return _firebaseAuth.currentUser?.reload();
+  }
+
   Future<User?> signin(String username, String password) async {
     final res = await _firebaseAuth.signInWithEmailAndPassword(
       email: username,

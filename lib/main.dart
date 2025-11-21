@@ -2,10 +2,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:task_planner/firebase_options.dart';
+import 'package:task_planner/routes/route.dart';
 import 'package:task_planner/theme/app_theme.dart';
 import 'package:task_planner/theme/style.dart';
-import 'package:task_planner/view/screens/home_screen.dart';
-import 'package:task_planner/view/screens/login_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,11 +26,8 @@ class MainApp extends ConsumerWidget {
       theme: AppTheme.theme,
       darkTheme: AppTheme.dark,
       themeMode: theme,
-      initialRoute: 'login',
-      routes: {
-        "login": (context) => const LoginPage(),
-        'home': (context) => HomePage(),
-      },
+      initialRoute: AppRoutes.initialRoute,
+      routes: AppRoutes.routes,
     );
   }
 }

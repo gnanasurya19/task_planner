@@ -17,7 +17,6 @@ class AppThemeNotifier extends StateNotifier<ThemeMode> {
   AppThemeNotifier(this.storage) : super(ThemeMode.dark) {
     getCurrent();
   }
-  // AppThemeProvider(super.state);
 
   SharedPref storage;
 
