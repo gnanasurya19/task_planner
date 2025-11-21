@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:task_planner/shared/providers/user_auth_provider.dart';
+import 'package:task_planner/shared/providers/user_auth_provider/user_auth_provider.dart';
 import 'package:task_planner/shared/providers/user_auth_provider/user_auth_state.dart';
 import 'package:task_planner/theme/app_theme.dart';
 import 'package:task_planner/theme/colors.dart';
@@ -28,6 +28,7 @@ class LoginPage extends StatelessWidget {
             ScaffoldMessenger.of(
               context,
             ).showSnackBar(SnackBar(content: Text('SuccessFully Logged in')));
+            Navigator.pushNamed(context, 'home');
           }
         });
         return Scaffold(
@@ -67,7 +68,7 @@ class LoginPage extends StatelessWidget {
                       }
                     },
                   ),
-                  SizedBox(height: 10),
+                  // SizedBox(height: 10),
                   FractionallySizedBox(
                     widthFactor: 1,
                     child: ElevatedButton(

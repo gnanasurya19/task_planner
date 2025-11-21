@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_planner/shared/data/local/storage.dart';
 
-class SharedPref implements Storage {
+class SharedPref extends Storage {
   SharedPreferences? _prefs;
   final Completer<SharedPreferences> _initCompleter = Completer();
 

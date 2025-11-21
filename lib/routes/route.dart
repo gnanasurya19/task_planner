@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:task_planner/features/auth/presentation/screens/home_screen.dart';
+import 'package:task_planner/features/home/presentation/home_screen.dart';
 import 'package:task_planner/features/auth/presentation/screens/login_screen.dart';
 import 'package:task_planner/features/splash/presentation/splash_screen.dart';
 
