@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:task_planner/features/splash/providers/user_cache_provider.dart';
@@ -15,6 +17,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(Duration(seconds: 0), () async {
+      debugger();
       final isUserLoggedIn = await ref.read(usercacheProvider.future);
       final route = isUserLoggedIn ? "home" : "login";
       if (mounted) {

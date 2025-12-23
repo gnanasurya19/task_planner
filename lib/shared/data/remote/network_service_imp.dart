@@ -7,14 +7,17 @@ import 'package:task_planner/shared/data/remote/network_service.dart';
 
 class NetworkService implements Network {
   @override
-  String get baseUrl => "https://fakestoreapi.com/";
+  String get baseUrl => "http://0.0.0.0:5030/api/";
 
   @override
   Future<dynamic> getFromAPI(
     String endUrl, {
     Map<String, dynamic>? queryParams,
   }) async {
-    return handleException(http.get(Uri.parse(baseUrl + endUrl)), endUrl);
+    return handleException(
+      http.get(Uri.parse(baseUrl + endUrl)).timeout(Duration(seconds: 10)),
+      endUrl,
+    );
   }
 
   @override
@@ -34,6 +37,7 @@ class NetworkService implements Network {
   Future handleException(Future<http.Response> future, String endUrl) async {
     try {
       final response = await future;
+      print(response);
       switch (response.statusCode) {
         case 200:
           final responseData = jsonDecode(response.body);
@@ -67,6 +71,7 @@ class NetworkService implements Network {
       if (e is SocketException) {
         throw NoInternetException(100, 'No Internet');
       } else {
+        print(e);
         throw UnknownApiException(99, 'Unknown Exception ${e.toString()}');
       }
     }

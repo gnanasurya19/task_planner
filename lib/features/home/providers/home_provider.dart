@@ -11,6 +11,7 @@ final homeDataProvider = Provider<HomeRepository>((ref) {
 
 final homeProvider = FutureProvider<List<dynamic>>((ref) async {
   final homeRepo = ref.watch(homeDataProvider);
-  final data = await homeRepo.getTaskItems("Products");
+  final data = await homeRepo.getTaskItems("Task/GetTasks");
+  print(data);
   return Future.value(data);
 });

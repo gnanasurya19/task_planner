@@ -1,57 +1,32 @@
 class AppException implements Exception {
   final String message;
   final int? statusCode;
-  final String? identifier;
-  const AppException(this.statusCode, this.identifier, this.message);
+  const AppException(this.statusCode, this.message);
 
   @override
   String toString() => "$message ";
 }
 
 class BadRequestException extends AppException {
-  const BadRequestException(
-    super.statusCode,
-    super.identifier, [
-    super.message = "Bad request Contact Admin",
-  ]);
+  const BadRequestException(super.statusCode, super.message);
 }
 
 class UnauthorizedException extends AppException {
-  const UnauthorizedException(
-    super.statusCode,
-    super.identifier, [
-    super.message = "Unauthorized Request",
-  ]);
+  const UnauthorizedException(super.statusCode, super.message);
 }
 
 class NotFoundException extends AppException {
-  const NotFoundException(
-    super.statusCode,
-    super.identifier, [
-    super.message = "Not Found",
-  ]);
+  const NotFoundException(super.statusCode, super.message);
 }
 
 class InternalServerErrorException extends AppException {
-  const InternalServerErrorException(
-    super.statusCode,
-    super.identifier, [
-    super.message = "Internal Server Error",
-  ]);
+  const InternalServerErrorException(super.statusCode, super.message);
 }
 
 class NoInternetException extends AppException {
-  const NoInternetException(
-    super.statusCode,
-    super.identifier, [
-    super.message = "No internet connection",
-  ]);
+  const NoInternetException(super.statusCode, super.message);
 }
 
 class UnknownApiException extends AppException {
-  const UnknownApiException(
-    super.statusCode,
-    super.identifier, [
-    super.message = "Unknown API error",
-  ]);
+  const UnknownApiException(super.statusCode, super.message);
 }
